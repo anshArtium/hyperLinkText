@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -41,7 +40,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var text = "https://www.youtube.com"
                     TextSelectionExample(applicationContext,
                         "Here's a link to a website: https://www.youtube.com. Check it out!")
                 }
@@ -97,49 +95,48 @@ fun TextSelectionExample(context: Context, paragraph: String) {
         )
     }
 }
-
-@Composable
-fun HyperlinkExample(textInput: String, context: Context) {
-    val text = buildAnnotatedString {
-        withStyle(
-            style = SpanStyle(
-                color = Color.Blue,
-                textDecoration = TextDecoration.Underline,
-                fontSize = 16.sp
-            )
-        ) {
-            val linkUri = if(textInput.contains("https://") || textInput.contains("http://")) {
-                textInput
-            } else {
-                ""
-            }
-            addStringAnnotation(
-                tag = "URL",
-                annotation = linkUri,
-                start = 0,
-                end = textInput.length
-            )
-            append(textInput)
-        }
-    }
-
-    ClickableText(
-        text = text,
-        modifier = Modifier.padding(16.dp),
-        onClick = { offset ->
-            if(text.contains("https://") || text.contains("http://")) {
-                text.getStringAnnotations("URL", offset, offset).firstOrNull()?.let { annotation ->
-                    val uri = annotation.item
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(context, intent, null)
-                }
-            } else {
-                Unit
-            }
-        }
-    )
-}
+//@Composable
+//fun HyperlinkExample(textInput: String, context: Context) {
+//    val text = buildAnnotatedString {
+//        withStyle(
+//            style = SpanStyle(
+//                color = Color.Blue,
+//                textDecoration = TextDecoration.Underline,
+//                fontSize = 16.sp
+//            )
+//        ) {
+//            val linkUri = if(textInput.contains("https://") || textInput.contains("http://")) {
+//                textInput
+//            } else {
+//                ""
+//            }
+//            addStringAnnotation(
+//                tag = "URL",
+//                annotation = linkUri,
+//                start = 0,
+//                end = textInput.length
+//            )
+//            append(textInput)
+//        }
+//    }
+//
+//    ClickableText(
+//        text = text,
+//        modifier = Modifier.padding(16.dp),
+//        onClick = { offset ->
+//            if(text.contains("https://") || text.contains("http://")) {
+//                text.getStringAnnotations("URL", offset, offset).firstOrNull()?.let { annotation ->
+//                    val uri = annotation.item
+//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                    startActivity(context, intent, null)
+//                }
+//            } else {
+//                Unit
+//            }
+//        }
+//    )
+//}
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
